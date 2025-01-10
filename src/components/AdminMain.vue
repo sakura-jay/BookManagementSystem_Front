@@ -41,7 +41,7 @@
                     <div class="header-right">
                         <el-avatar :icon="UserFilled" />
                         <el-dropdown @command="commandHandler">
-                            <span class="el-dropdown-link">欢迎,admin</span>
+                            <span class="el-dropdown-link">欢迎,{{admin}}</span>
                             <template #dropdown>
                                 <el-dropdown-menu>
                                     <el-dropdown-item command="logout">退出登录</el-dropdown-item>
@@ -64,6 +64,7 @@
 import { UserFilled } from '@element-plus/icons-vue'
 import {useRouter} from 'vue-router'
 const router = useRouter()
+const admin = localStorage.getItem('adminName')
 function commandHandler(val){
     if(val='logout'){
         router.replace('/adminLogin')

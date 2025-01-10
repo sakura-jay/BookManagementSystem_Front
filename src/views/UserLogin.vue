@@ -32,6 +32,7 @@
         <router-link to="/userRegister" >
             <el-link>没有账号？前往注册</el-link>
         </router-link>
+        <br>
         <router-link to="/adminLogin" >
             <el-link>管理员？前往登录</el-link>
         </router-link>
@@ -48,8 +49,7 @@
  import {ref,onMounted ,getCurrentInstance } from 'vue'
  import {useRouter} from 'vue-router'
  import { ElMessage } from 'element-plus'
-//  import axios from 'axios'
-//  import Header from '@/components/Header.vue';
+ import axios from 'axios'
  import SIdentify from '@/components/Sidentify'
  import md5 from 'js-md5';
 
@@ -120,19 +120,16 @@ function submitForm(){
                 }).then((result) => {
                     console.log(result);
                     if(result.data.code == 200){
-                        if(result.data.data.userStatus == 1){
+                        if(result.data.data.userStatus == 0){
                         fullscreenLoading.value = false
                         ElMessage.error("登录失败！账号已被封禁！")
                         }
                         else{
                             fullscreenLoading.value = false
-                            console.log(result);
+                            // console.log(result);
                             ElMessage.success('登录成功！')
-                            router.replace('./') 
-                            localStorage.setItem("userId",result.data.data.userId)
-                            localStorage.setItem("userName",result.data.data.userName)
-                            localStorage.setItem("isLoggedIn",true)
-                            localStorage.setItem("userAvatar",result.data.data.userAvatar)
+                            router.replace('./userMain') 
+                            localStorage.setItem("token",result.data.data.token)
                         }
                     }
                     else{
@@ -169,9 +166,9 @@ html, body {
 
 .container {
     height: 100vh; /* vh: view height */
-    background: url('https://store.fastly.steamstatic.com/public/shared/images/responsive/steam_share_image.jpg') no-repeat center;
+    background: url('../assets/bg.jpg') no-repeat center;
     overflow: hidden;
-    background-size: 50% 50%;
+    background-size: 100% 100%;
     background-color: #171a21;
 }
 

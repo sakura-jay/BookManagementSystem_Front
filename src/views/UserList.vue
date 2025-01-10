@@ -81,6 +81,7 @@
 <script setup>
 import { ref ,onMounted ,getCurrentInstance, watchEffect  } from 'vue'
 import { useRouter } from 'vue-router'
+ import { ElMessage } from 'element-plus'
 
 const { $http } = getCurrentInstance().appContext.config.globalProperties
 const router = useRouter()
@@ -132,7 +133,23 @@ function offline(row){
 }
 
 function userList(){
-    
+     $http({
+            method: 'get',
+            url: 'http://localhost:8888/user/userList',
+            params: queryParams.value
+        }).then((result) => {
+            if(result.data.code == 200){
+                console.log(result);
+                
+                tableData.value = result.data.data.records
+                total.value = result.data.data.total
+            }
+            else{
+                ElMessage.error(result.data.message)
+            }
+        }).catch((err) => {
+            ElMessage.error(err)
+        });
 }
 </script>
 

@@ -3,12 +3,16 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
-    redirect: '/userMain'
+    redirect: '/userLogin'
   },
   {
     path: '/userLogin',
     name: 'UserLogin',
     component: () => import('@/views/UserLogin.vue')
+  },
+  {
+    path: '/adminLogin',
+    component: () => import('@/views/AdminLogin.vue')
   },
   {
     path: '/userRegister',

@@ -18,14 +18,8 @@
         <el-form-item label="用户名:" prop="userName" >
             <el-input v-model="FormData.userName" type="text" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="昵称:" prop="userNickname" >
-            <el-input v-model="FormData.userNickname" type="text" autocomplete="off" />
-        </el-form-item>
         <el-form-item label="密码:" prop="userPassword" >
             <el-input v-model="FormData.userPassword" type="password" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item label="邮箱：" prop="userEmail" >
-            <el-input v-model="FormData.userEmail" type="email" autocomplete="off" />
         </el-form-item>
         <el-form-item label="验证码:" prop="sidentifyMode" >
             <el-input v-model="FormData.sidentifyMode" type="text" autocomplete="off" style="width: 80px"/>
@@ -86,9 +80,7 @@ const router = useRouter()
 const ruleFormRef = ref()
 const FormData = ref({
     userName:'',
-    userNickname:'',
     userPassword:'',
-    userEmail:'',
     sidentifyMode:''
 })
 const rules = ref({
@@ -132,7 +124,7 @@ function submitForm(){
                         fullscreenLoading.value = false
                         console.log(result);
                         ElMessage.success('注册成功！')
-                        router.replace('./login') 
+                        router.replace('./userLogin') 
                     }
                     else{
                         fullscreenLoading.value = false
@@ -168,9 +160,9 @@ html, body {
 
 .container {
     height: 100vh; /* vh: view height */
-    background: url('https://store.fastly.steamstatic.com/public/shared/images/responsive/steam_share_image.jpg') no-repeat center;
+    background: url('../assets/bg.jpg') no-repeat center;
     overflow: hidden;
-    background-size: 50% 50%;
+    background-size: 100% 100%;
     background-color: #171a21;
 }
 

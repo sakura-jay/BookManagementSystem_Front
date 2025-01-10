@@ -18,10 +18,10 @@
       label-width="auto"
     >
         <el-form-item label="用户名:" prop="userName" >
-            <el-input v-model="FormData.userName" type="text" autocomplete="off" />
+            <el-input v-model="FormData.adminName" type="text" autocomplete="off" />
         </el-form-item>
         <el-form-item label="密码:" prop="userPassword" >
-            <el-input v-model="FormData.userPassword" type="password" autocomplete="off"/>
+            <el-input v-model="FormData.adminPassword" type="password" autocomplete="off"/>
         </el-form-item>
         <el-form-item label="验证码:" prop="sidentifyMode" >
             <el-input v-model="FormData.sidentifyMode" type="text" autocomplete="off" style="width: 80px"/>
@@ -48,7 +48,7 @@
 //  import axios from 'axios'
 //  import Header from '@/components/Header.vue';
  import SIdentify from '@/components/Sidentify'
- import md5 from 'js-md5';
+//  import md5 from 'js-md5';
 
 const fullscreenLoading = ref(false)
 
@@ -81,16 +81,16 @@ const refreshCode = () => {
 const router = useRouter()
 const ruleFormRef = ref()
 const FormData = ref({
-    userName:'',
-    userPassword:'',
+    adminName:'',
+    adminPassword:'',
     sidentifyMode:''
 })
 const rules = ref({
-    userName: [
+    adminName: [
         { required: true, message: '用户名不能为空！',trigger: 'blur'},
         { min: 4, max: 20, message: '用户名长度必须在4到20个字符',trigger: 'blur'}
     ],
-    userPassword:[
+    adminPassword:[
         { required: true, message: '密码不能为空！', trigger: 'blur'},
         { min: 5, message: '密码最少5个字符', trigger: 'blur'}
     ],
@@ -112,22 +112,17 @@ function submitForm(){
                 // FormData.value.userPassword = md5(FormData.value.userPassword)
                 $http({
                     method: 'post',
-                    url: 'http://localhost:8888/user/login',
+                    url: 'http://localhost:8888/admin/login',
                     params: FormData.value
                 }).then((result) => {
                     console.log(result);
                     if(result.data.code == 200){
-                        if(result.data.data.userStatus == 1){
                         fullscreenLoading.value = false
-                        ElMessage.error("登录失败！账号已被封禁！")
-                        }
-                        else{
-                            fullscreenLoading.value = false
-                            console.log(result);
-                            ElMessage.success('登录成功！')
-                            router.replace('./') 
-                            localStorage.setItem("userName",result.data.data.userName)
-                        }
+                        // console.log(result);
+                        ElMessage.success('登录成功！')
+                        router.replace('./adminMain/userList') 
+                        localStorage.setItem("adminName",result.data.data.adminName)
+                        localStorage.setItem("token",result.data.data.token)
                     }
                     else{
                         fullscreenLoading.value = false
@@ -163,9 +158,9 @@ html, body {
 
 .container {
     height: 100vh; /* vh: view height */
-    background: url('https://store.fastly.steamstatic.com/public/shared/images/responsive/steam_share_image.jpg') no-repeat center;
+    background: url('../assets/bg.jpg') no-repeat center;
     overflow: hidden;
-    background-size: 50% 50%;
+    background-size: 100% 100%;
     background-color: #171a21;
 }
 
